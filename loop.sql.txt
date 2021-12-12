@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS steam_sale_in_loop
+(
+    sale_id INT NOT NULL,
+    appid    INT NOT NULL,
+    discount    INT NOT NULL,
+    PRIMARY KEY (sale_id)
+);
+
+
+
+DO
+$do$
+BEGIN
+   FOR i IN 1..15 LOOP
+      INSERT INTO steam_sale_in_loop
+         (sale_id,appid,discount)
+      SELECT i, i,50
+      ON CONFLICT DO NOTHING;
+   END LOOP;
+END
+$do$;
